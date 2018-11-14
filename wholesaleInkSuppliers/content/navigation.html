@@ -1,0 +1,51 @@
+ <?php
+    $cat_sql = 'SELECT * FROM category'; // sets up query
+    $cat_query = mysqli_query($dbconnect, $cat_sql); // runs query
+    $cat_rs = mysqli_fetch_assoc($cat_query); // organises results
+
+?>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-company-background">
+    
+        <div class="container">
+            <!--This is the title of the nav bar which links to the home page-->
+            <a class="navbar-brand" href="index.php">Wholesale Ink Suppliers</a> 
+            <!--When the screen size gets to certain width, it will change the links from a list to a dropdown menu-->
+            <button class="navbar-toggler float-right" data-target="#navbutton" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span></button>
+            <div class="navbar-collapse collapse" id="navbutton">
+                <ul class="navbar-nav ml-auto">
+                    <!--Below is the links for each page-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
+                    </li>
+                    
+                    
+                    <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Products </a>
+                            <div class="dropdown-menu">
+                                <?php do { ?>
+                                        <a class="dropdown-item" href="index.php?page=category&categoryID=<?php echo $cat_rs['categoryID'];?>"> 
+                                            <?php echo $cat_rs['catName'];?></a> 
+                                <?php } while ($cat_rs = mysqli_fetch_assoc($cat_query)); ?>
+                    
+                    
+                            </div>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=reviews">Customer Reviews </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin/admin.php">Admin &nbsp</a>
+                    </li>
+                    <li>
+                        <form name="search" method="post" action="index.php?page=productsearch" class="form-inline">
+                            <input class="form-control mr-sm-2" name="searchBar" type="text" class="form-control">
+                            <button class="btn btn-outline-secondary" type="submit"><img src="https://flaticons.net/icons/Mobile%20Application/Search.png" style="width:24px;"></button>
+                          </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
